@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Heart, Stars, Volume2, VolumeX, X } from 'lucide-react'
+import { Analytics } from '@vercel/analytics/react'
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -67,7 +68,7 @@ Emin`
 
     const initPlayer = () => {
       if (playerInitialized || youtubePlayerRef.current) return
-      
+
       playerInitialized = true
       youtubePlayerRef.current = new window.YT.Player('youtube-player', {
         videoId: youtubeVideoId,
@@ -105,9 +106,9 @@ Emin`
                   try {
                     const state = youtubePlayerRef.current.getPlayerState()
                     // Eğer paused, ended veya cued durumundaysa tekrar başlat
-                    if (state === window.YT.PlayerState.PAUSED || 
-                        state === window.YT.PlayerState.ENDED ||
-                        state === window.YT.PlayerState.CUED) {
+                    if (state === window.YT.PlayerState.PAUSED ||
+                      state === window.YT.PlayerState.ENDED ||
+                      state === window.YT.PlayerState.CUED) {
                       console.log('Müzik durdu, tekrar başlatılıyor... State:', state)
                       youtubePlayerRef.current.playVideo()
                       setMusicPlaying(true)
@@ -408,14 +409,12 @@ Emin`
               >
                 <div className="absolute inset-0 bg-[#e6d0b3] rounded-md shadow-2xl"></div>
                 <div
-                  className={`absolute left-2 right-2 top-2 h-[90%] bg-white rounded-sm shadow transition-all duration-1000 ${
-                    isOpen ? '-translate-y-24' : 'translate-y-0'
-                  }`}
+                  className={`absolute left-2 right-2 top-2 h-[90%] bg-white rounded-sm shadow transition-all duration-1000 ${isOpen ? '-translate-y-24' : 'translate-y-0'
+                    }`}
                 ></div>
                 <div
-                  className={`absolute top-0 left-0 w-full h-1/2 bg-[#f0e1cf] origin-top transition-all duration-700 z-20 rounded-t-md border-b border-white/20 ${
-                    isOpen ? 'z-0 brightness-90' : 'z-30 shadow-sm'
-                  }`}
+                  className={`absolute top-0 left-0 w-full h-1/2 bg-[#f0e1cf] origin-top transition-all duration-700 z-20 rounded-t-md border-b border-white/20 ${isOpen ? 'z-0 brightness-90' : 'z-30 shadow-sm'
+                    }`}
                   style={{
                     transformStyle: 'preserve-3d',
                     transform: isOpen ? 'rotateX(180deg)' : 'rotateX(0deg)'
@@ -426,9 +425,8 @@ Emin`
                   <div className="absolute bottom-0 right-0 w-0 h-0 border-r-[150px] md:border-r-[200px] border-b-[100px] md:border-b-[130px] border-r-transparent border-b-[#dcbfa3] rounded-br-md"></div>
                 </div>
                 <div
-                  className={`absolute top-[40%] left-1/2 -translate-x-1/2 z-40 transition-all duration-500 ${
-                    isOpen ? 'opacity-0 scale-150' : 'opacity-100'
-                  }`}
+                  className={`absolute top-[40%] left-1/2 -translate-x-1/2 z-40 transition-all duration-500 ${isOpen ? 'opacity-0 scale-150' : 'opacity-100'
+                    }`}
                 >
                   <div className="w-12 h-12 bg-rose-600 rounded-full border-2 border-rose-400 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                     <Heart className="text-rose-100 w-6 h-6" fill="currentColor" />
@@ -442,14 +440,12 @@ Emin`
 
             {/* Mektup Okuma Ekranı */}
             <div
-              className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm transition-all duration-1000 ease-in-out ${
-                isReadMode && !showPhoto ? 'opacity-100 visible' : isReadMode && showPhoto ? 'opacity-0 invisible' : 'opacity-0 invisible pointer-events-none'
-              }`}
+              className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm transition-all duration-1000 ease-in-out ${isReadMode && !showPhoto ? 'opacity-100 visible' : isReadMode && showPhoto ? 'opacity-0 invisible' : 'opacity-0 invisible pointer-events-none'
+                }`}
             >
               <div
-                className={`bg-[#fffdfa] w-full max-w-lg md:max-w-2xl min-h-[60vh] max-h-[85vh] shadow-2xl rounded-sm p-8 md:p-16 relative flex flex-col transform transition-all duration-1000 ${
-                  isReadMode && !showPhoto ? 'translate-y-0 scale-100 rotate-0' : 'translate-y-40 scale-90 rotate-2'
-                }`}
+                className={`bg-[#fffdfa] w-full max-w-lg md:max-w-2xl min-h-[60vh] max-h-[85vh] shadow-2xl rounded-sm p-8 md:p-16 relative flex flex-col transform transition-all duration-1000 ${isReadMode && !showPhoto ? 'translate-y-0 scale-100 rotate-0' : 'translate-y-40 scale-90 rotate-2'
+                  }`}
               >
                 <div className="absolute inset-0 opacity-60 bg-paper-texture pointer-events-none rounded-sm"></div>
 
@@ -494,41 +490,38 @@ Emin`
 
                 <div className="mt-10 flex justify-center relative z-10">
                   <Heart
-                    className={`text-rose-500 w-6 h-6 transition-transform duration-500 ${
-                      showConfetti ? 'scale-125 animate-bounce' : 'scale-100'
-                    }`}
+                    className={`text-rose-500 w-6 h-6 transition-transform duration-500 ${showConfetti ? 'scale-125 animate-bounce' : 'scale-100'
+                      }`}
                     fill="currentColor"
                   />
                 </div>
               </div>
             </div>
-            
+
             {/* Fotoğraf Gösterimi (Finale) */}
             <div
-              className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md transition-all duration-1000 ease-in-out ${
-                showPhoto ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-              }`}
+              className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md transition-all duration-1000 ease-in-out ${showPhoto ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+                }`}
               onClick={handleCloseReadMode}
             >
-              <div 
-                className={`relative max-w-2xl w-full transform transition-all duration-1000 ${
-                  showPhoto ? 'scale-100 translate-y-0 rotate-0' : 'scale-90 translate-y-10 -rotate-2'
-                }`}
+              <div
+                className={`relative max-w-2xl w-full transform transition-all duration-1000 ${showPhoto ? 'scale-100 translate-y-0 rotate-0' : 'scale-90 translate-y-10 -rotate-2'
+                  }`}
                 onClick={(e) => e.stopPropagation()}
               >
-                 <div className="bg-white p-4 rounded-sm shadow-2xl rotate-1">
-                    <img 
-                      src="/hurriyet_gazetesi.jpg" 
-                      alt="Sürpriz" 
-                      className="w-full h-auto rounded-sm border border-gray-200"
-                    />
-                    <div className="absolute -bottom-16 left-0 right-0 text-center">
-                       <p className="text-white/90 text-2xl font-serif tracking-widest drop-shadow-md">Doğum Günün Kutlu Olsun</p>
-                    </div>
-                 </div>
-                 
-                 {/* Kapat Butonu */}
-                 <button
+                <div className="bg-white p-4 rounded-sm shadow-2xl rotate-1">
+                  <img
+                    src="/hurriyet_gazetesi.jpg"
+                    alt="Sürpriz"
+                    className="w-full h-auto rounded-sm border border-gray-200"
+                  />
+                  <div className="absolute -bottom-16 left-0 right-0 text-center">
+                    <p className="text-white/90 text-2xl font-serif tracking-widest drop-shadow-md">Doğum Günün Kutlu Olsun</p>
+                  </div>
+                </div>
+
+                {/* Kapat Butonu */}
+                <button
                   onClick={handleCloseReadMode}
                   className="absolute -top-12 right-0 text-white/80 hover:text-white transition"
                 >
@@ -541,6 +534,7 @@ Emin`
         </div>
       </div>
 
+      <Analytics />
     </div>
   )
 }
